@@ -1,0 +1,45 @@
+$v-font-size: 14px;
+$v-font-family: "Open Sans", sans-serif;
+$v-background-color: #fff;
+
+@import "../valo/valo.scss";
+
+@mixin zooTheme {
+  @include valo;
+  
+  .v-slot-navPanel {
+  	background: #99c9ff;
+  }
+  
+  .v-slot-navPanel .v-button {
+  	padding: 0 4px;
+  	background: rgba(0,0,0,0);
+  	-webkit-box-shadow: none;
+  	-moz-box-shadow: none;
+  	-o-box-shadow: none;
+  	box-shadow: none;
+  	border: none;
+  }
+  
+  .v-slot-navPanel .v-button:focus:after {
+  	-webkit-box-shadow: none;
+  	-moz-box-shadow: none;
+  	-o-box-shadow: none;
+  	box-shadow: none;
+  	border: none;
+  	background: rgba(0,0,0,0);
+  }
+  
+  .v-slot-navPanel .v-button .v-button-wrap {
+  	color: #1c278a;
+  	text-decoration: underline;
+  }
+  
+  .v-slot-navPanel .v-button:hover .v-button-wrap {
+  	color: #4859ef;
+  }
+  
+  .v-slot-navPanel .v-button:active .v-button-wrap {
+  	color: #fff;
+  }
+}
