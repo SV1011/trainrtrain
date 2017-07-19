@@ -8,7 +8,7 @@ $v-background-color: #fff;
   @include valo;
   
   .v-slot-navPanel {
-  	background: #99c9ff;
+  	background: #eef2ff;
   }
   
   .v-slot-navPanel .v-button {
@@ -19,6 +19,9 @@ $v-background-color: #fff;
   	-o-box-shadow: none;
   	box-shadow: none;
   	border: none;
+  	font-size: 2vh;
+  	margin-top: 0.6vh;
+  	margin-left: 12px;
   }
   
   .v-slot-navPanel .v-button:focus:after {
@@ -40,6 +43,19 @@ $v-background-color: #fff;
   }
   
   .v-slot-navPanel .v-button:active .v-button-wrap {
-  	color: #fff;
+  	color: #f11;
   }
+  
+  .v-table-header-wrap {
+  	background: #353f9a;
+  	color: #eef2ff;
+  	font-weight: bold;
+  }
+  .v-checkbox input:checked + label {
+    color: green;
+}
+  .v-checkbox input:not(:checked) + label {
+    color: green;
+}
+
 }
