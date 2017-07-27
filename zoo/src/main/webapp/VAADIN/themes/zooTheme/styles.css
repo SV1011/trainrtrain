@@ -12987,6 +12987,7 @@ div.v-layout.v-horizontal.v-widget {
 
 .zooTheme .v-slot-navPanel {
 	background: #eef2ff;
+	border-bottom: 1px dashed #1c278a;
 }
 
 .zooTheme .v-slot-navPanel .v-button {
@@ -13030,10 +13031,86 @@ div.v-layout.v-horizontal.v-widget {
 	font-weight: bold;
 }
 
-.zooTheme .v-checkbox input:checked + label {
-	color: green;
+.zooTheme .v-slot-input {
+	padding-top: 22px;
+	background: #eef2ff;
+	border-right: 1px dashed #1c278a;
 }
 
-.zooTheme .v-checkbox input:not(:checked) + label {
-	color: green;
+.zooTheme .v-slot-input .v-verticallayout {
+	padding-left: 9%;
+}
+
+.zooTheme .v-slot-input .v-widget {
+	width: 90%;
+}
+
+.zooTheme .v-slot-input .v-widget input, .zooTheme .v-slot-input .v-widget .v-datefield, .zooTheme .v-slot-input .v-widget .v-filterselect {
+	width: 100%;
+}
+
+.zooTheme .v-textfield {
+	height: 28px;
+	width: 180px;
+	border-radius: 0;
+}
+
+.zooTheme .v-textfield:focus, .zooTheme .v-datefield [class*="textfield"]:focus, .zooTheme .v-filterselect [class*="input"]:focus {
+	border-color: #1c278a;
+	box-shadow: 0 0 0 2px rgba(53, 63, 154, 0.3);
+}
+
+.zooTheme .v-datefield-day {
+	border-radius: 0;
+}
+
+.zooTheme .v-datefield {
+	width: 180px;
+	height: 28px;
+	border-radius: 0;
+}
+
+.zooTheme .v-filterselect {
+	height: 28px;
+	width: 180px;
+	border-radius: 0;
+}
+
+.zooTheme .v-button {
+	padding: 0 4px;
+	background: transparent;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	-o-box-shadow: none;
+	box-shadow: none;
+	border: none;
+}
+
+.zooTheme .v-button:focus:after {
+	box-shadow: 0 0 0 2px rgba(53, 63, 154, 0.3);
+	border: 1px dashed #1c278a;
+	background: transparent;
+}
+
+.zooTheme .v-button .v-button-wrap {
+	color: #1c278a;
+	text-decoration: underline;
+}
+
+.zooTheme .v-button:hover .v-button-wrap {
+	color: #4859ef;
+}
+
+.zooTheme .v-button:active .v-button-wrap {
+	color: #f11;
+}
+
+.zooTheme .v-filterselect-suggestpopup .gwt-MenuItem-selected, .zooTheme datefield-calendarpanel-day-selected, .zooTheme .v-datefield-calendarpanel-day-selected:hover {
+	color: #fff;
+	background: #1c278a;
+	border-radius: 0;
+}
+
+.zooTheme .v-datefield-popup td.v-datefield-calendarpanel-month {
+	color: #1c278a;
 }

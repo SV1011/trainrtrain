@@ -9,6 +9,7 @@ $v-background-color: #fff;
   
   .v-slot-navPanel {
   	background: #eef2ff;
+  	border-bottom: 1px dashed #1c278a;
   }
   
   .v-slot-navPanel .v-button {
@@ -51,11 +52,88 @@ $v-background-color: #fff;
   	color: #eef2ff;
   	font-weight: bold;
   }
-  .v-checkbox input:checked + label {
-    color: green;
-}
-  .v-checkbox input:not(:checked) + label {
-    color: green;
-}
-
+  
+  .v-slot-input {
+  	padding-top: 22px;
+  	background: #eef2ff;
+  	border-right: 1px dashed #1c278a;
+  }
+  
+  .v-slot-input .v-verticallayout {
+  	padding-left: 9%;
+  }
+  
+  .v-slot-input .v-widget {
+  	width: 90%;
+  }
+  
+  .v-slot-input .v-widget input, .v-slot-input .v-widget .v-datefield, .v-slot-input .v-widget .v-filterselect {
+  	width: 100%;
+  }
+  
+  .v-textfield {
+  	height: 28px;
+  	width: 180px;
+  	border-radius: 0;
+  }
+  
+  .v-textfield:focus, .v-datefield [class*="textfield"]:focus, .v-filterselect [class*="input"]:focus {
+  	border-color: #1c278a;
+  	box-shadow: 0 0 0 2px rgba(53, 63, 154, 0.3);
+  }
+  
+  .v-datefield-day {
+  	border-radius: 0;
+  }
+  
+  .v-datefield {
+  	width: 180px;
+  	height: 28px;
+  	border-radius: 0;
+  }
+  
+  .v-filterselect {
+  	height: 28px;
+  	width: 180px;
+  	border-radius: 0;
+  }
+  
+  .v-button {
+  	padding: 0 4px;
+  	background: rgba(0,0,0,0);
+  	-webkit-box-shadow: none;
+  	-moz-box-shadow: none;
+  	-o-box-shadow: none;
+  	box-shadow: none;
+  	border: none;
+  }
+  
+  .v-button:focus:after {
+  	box-shadow: 0 0 0 2px rgba(53, 63, 154, 0.3);
+  	border: 1px dashed #1c278a;
+  	background: rgba(0,0,0,0);
+  }
+  
+  .v-button .v-button-wrap {
+  	color: #1c278a;
+  	text-decoration: underline;
+  }
+  
+  .v-button:hover .v-button-wrap {
+  	color: #4859ef;
+  }
+  
+  .v-button:active .v-button-wrap {
+  	color: #f11;
+  }
+  
+  .v-filterselect-suggestpopup .gwt-MenuItem-selected, datefield-calendarpanel-day-selected, .v-datefield-calendarpanel-day-selected:hover {
+  	color: #fff;
+  	background: #1c278a;
+  	border-radius: 0;
+  }
+  
+  .v-datefield-popup td.v-datefield-calendarpanel-month {
+  	color: #1c278a;
+  }
 }

@@ -9,9 +9,11 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.DateField;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -71,14 +73,71 @@ public class zooUI extends UI {
     	table.add(new tabElement());
     	table.add(new tabElement());
     	table.add(new tabElement());
+    	VerticalLayout inputLayer = new VerticalLayout();
         VerticalLayout mainLayout = new VerticalLayout();
         HorizontalLayout navigationPanelLayout = new HorizontalLayout();
+        HorizontalLayout bottomLayout = new HorizontalLayout();
         VerticalLayout tableLayout = new VerticalLayout();
+        
+        TextField iPetName = new TextField("Имя животного");
+        ComboBox iPetType = new ComboBox("Тип животного");
+        ComboBox iPetGender = new ComboBox("Пол животного");
+        DateField iPetBirthday = new DateField("День рождения животного");
+        TextField iName = new TextField("Имя хозяина");
+        TextField iEMail = new TextField("E-mail");
+        TextField iPhoneNumber = new TextField("Номер телефона");
+        
+        iPetType.addItem("Собака");
+        iPetType.addItem("Кошка");
+        iPetType.addItem("Корова");
+        iPetType.addItem("Динозавр");
+        iPetType.addItem("Хомяк");
+        iPetGender.addItem("Мужской");
+        iPetGender.addItem("Женский");
+        
+        Label currentID = new Label();
+        
+        Button add = new Button("Отправить в БД");
+        Button edit = new Button("Отправить в БД");
         
         Button refreshTable = new Button("Обновить");
         Button addLine = new Button("Добавить элемент");
         Button editLine = new Button("Изменить элемент");
         Button removeLine = new Button("Удалить элемент");
+        
+        add.addClickListener( e -> {
+        	bottomLayout.removeComponent(inputLayer);
+        	bottomLayout.setExpandRatio(tableLayout, 1f);
+        });
+        
+        edit.addClickListener( e -> {
+        	bottomLayout.removeComponent(inputLayer);
+        	bottomLayout.setExpandRatio(tableLayout, 1f);
+        });
+        
+        addLine.addClickListener( e -> {
+        	inputLayer.removeAllComponents();
+        	bottomLayout.removeComponent(tableLayout);
+        	bottomLayout.addComponents(inputLayer, tableLayout);
+        	bottomLayout.setExpandRatio(inputLayer, 0.20f);
+        	bottomLayout.setExpandRatio(tableLayout, 0.80f);
+        	inputLayer.addComponents(
+        			iPetName, iPetType, iPetGender,
+        			iEMail, iPetBirthday, iName, iPhoneNumber, currentID, edit
+        	);
+        });
+        
+        editLine.addClickListener( e -> {
+        	inputLayer.removeAllComponents();
+        	bottomLayout.removeComponent(tableLayout);
+        	bottomLayout.addComponents(inputLayer, tableLayout);
+        	bottomLayout.setExpandRatio(inputLayer, 0.20f);
+        	bottomLayout.setExpandRatio(tableLayout, 0.80f);
+        	inputLayer.addComponents(
+        			iPetName, iPetType, iPetGender,
+        			iEMail, iPetBirthday, iName, iPhoneNumber, currentID, edit
+        	);
+        });
         
         refreshTable.addClickListener( e -> {
             if(table.size() != 0) {
@@ -93,6 +152,11 @@ public class zooUI extends UI {
             }
         });
         
+        inputLayer.setStyleName("input");
+        bottomLayout.addComponent(tableLayout);
+        bottomLayout.setWidth("100%");
+        bottomLayout.setHeight("100%");
+        bottomLayout.setStyleName("tableC");
         tableRender.setColumnWidth("*", 42);
         tableRender.setWidth("100%");
         tableRender.setHeight("100%");
@@ -101,10 +165,11 @@ public class zooUI extends UI {
         tableLayout.setStyleName("tableC");
         navigationPanelLayout.setStyleName("navPanel");
         navigationPanelLayout.addComponents(addLine, editLine, removeLine, refreshTable);
-        mainLayout.addComponents(navigationPanelLayout, tableLayout);
+        mainLayout.addComponents(navigationPanelLayout, bottomLayout);
         mainLayout.setHeight("100%");
         mainLayout.setExpandRatio(navigationPanelLayout, 0.05f);
-        mainLayout.setExpandRatio(tableLayout, 0.95f);
+        mainLayout.setExpandRatio(bottomLayout, 0.95f);
+        
         setContent(mainLayout);
     }
 
