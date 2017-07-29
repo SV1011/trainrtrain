@@ -13114,3 +13114,7 @@ div.v-layout.v-horizontal.v-widget {
 .zooTheme .v-datefield-popup td.v-datefield-calendarpanel-month {
 	color: #1c278a;
 }
+
+.zooTheme .v-slot-imp .v-textfield, .zooTheme .v-slot-imp .v-filterselect {
+	border: 1px dashed #1c278a;
+}

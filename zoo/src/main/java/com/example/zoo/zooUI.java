@@ -2,12 +2,16 @@ package com.example.zoo;
 
 import javax.servlet.annotation.WebServlet;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Vector;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.shared.Position;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.DateField;
@@ -18,6 +22,8 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
+import com.vaadin.server.Page;
 
 class tabElement {
 	
@@ -56,8 +62,34 @@ class tabElement {
 
 @Theme("zooTheme")
 public class zooUI extends UI {
+	public static boolean validate(Pattern x, String y) {
+        Matcher matcher = x.matcher(y);
+        return matcher.find();
+    }
     @Override
     protected void init(VaadinRequest vaadinRequest) {
+    	final Pattern emailValid = 
+    			Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+    	final Pattern phoneValid = 
+    			Pattern.compile("^\\+([0-9\\-]?){9,11}[0-9]$");
+    	final Notification corctMSG =
+    			new Notification("Успешно!", "Операция завершена", Notification.Type.HUMANIZED_MESSAGE);
+    	final Notification invalidEmail =
+    			new Notification("Ошибка!", "E-mail введен не корректно", Notification.Type.ERROR_MESSAGE);
+    	final Notification invalidPN =
+    			new Notification("Ошибка!", "Номер телефона введен не корректно. Пример: +12223334455", 
+    			Notification.Type.ERROR_MESSAGE);
+    	final Notification invalidAll =
+    			new Notification("Ошибка!", "Не все обязательные поля заполнены!", 
+    			Notification.Type.ERROR_MESSAGE);
+    	corctMSG.setPosition(Position.BOTTOM_RIGHT);
+    	corctMSG.setDelayMsec(2000);
+    	invalidEmail.setPosition(Position.BOTTOM_RIGHT);
+    	invalidEmail.setDelayMsec(2000);
+    	invalidPN.setPosition(Position.BOTTOM_RIGHT);
+    	invalidPN.setDelayMsec(2000);
+    	invalidAll.setPosition(Position.BOTTOM_RIGHT);
+    	invalidAll.setDelayMsec(2000);
     	Vector <tabElement> table = new Vector<>();
     	Table tableRender = new Table();
     	tableRender.addContainerProperty("*", CheckBox.class, null);
@@ -86,18 +118,26 @@ public class zooUI extends UI {
         TextField iName = new TextField("Имя хозяина");
         TextField iEMail = new TextField("E-mail");
         TextField iPhoneNumber = new TextField("Номер телефона");
+        iPetName.setStyleName("imp");
+        iPetType.setStyleName("imp");
+        iName.setStyleName("imp");
+        iPhoneNumber.setStyleName("imp");
         
         iPetType.addItem("Собака");
         iPetType.addItem("Кошка");
         iPetType.addItem("Корова");
         iPetType.addItem("Динозавр");
         iPetType.addItem("Хомяк");
+        iPetType.setValue("Собака");
+        iPetType.setNullSelectionAllowed(false);
         iPetGender.addItem("Мужской");
         iPetGender.addItem("Женский");
+        iPetGender.setValue("Мужской");
+        iPetGender.setNullSelectionAllowed(false);
         
         Label currentID = new Label();
         
-        Button add = new Button("Отправить в БД");
+        Button addb = new Button("Отправить в БД");
         Button edit = new Button("Отправить в БД");
         
         Button refreshTable = new Button("Обновить");
@@ -105,17 +145,45 @@ public class zooUI extends UI {
         Button editLine = new Button("Изменить элемент");
         Button removeLine = new Button("Удалить элемент");
         
-        add.addClickListener( e -> {
-        	bottomLayout.removeComponent(inputLayer);
-        	bottomLayout.setExpandRatio(tableLayout, 1f);
+        addb.addClickListener( e -> {
+        	if(iPetName.getValue() != "" && iName.getValue() != "") {
+        		if(validate(emailValid, iEMail.getValue()) || iEMail.getValue() == "") {
+        			if (validate(phoneValid, iPhoneNumber.getValue())) {
+        				corctMSG.show(Page.getCurrent());
+        				bottomLayout.removeComponent(inputLayer);
+        				bottomLayout.setExpandRatio(tableLayout, 1f);
+        			}
+        			else invalidPN.show(Page.getCurrent());
+        		}
+        		else invalidEmail.show(Page.getCurrent());
+        	}
+        	else invalidAll.show(Page.getCurrent());
         });
         
         edit.addClickListener( e -> {
-        	bottomLayout.removeComponent(inputLayer);
-        	bottomLayout.setExpandRatio(tableLayout, 1f);
+        	if(iPetName.getValue() != "" && iName.getValue() != "") {
+        		if(validate(emailValid, iEMail.getValue()) || iEMail.getValue() == "") {
+        			if (validate(phoneValid, iPhoneNumber.getValue())) {
+        				corctMSG.show(Page.getCurrent());
+        				bottomLayout.removeComponent(inputLayer);
+        				bottomLayout.setExpandRatio(tableLayout, 1f);
+        			}
+        			else invalidPN.show(Page.getCurrent());
+        		}
+        		else invalidEmail.show(Page.getCurrent());
+        	}
+        	else invalidAll.show(Page.getCurrent());
         });
         
         addLine.addClickListener( e -> {
+        	Date sDate = new Date();
+        	iPetName.setValue("");
+        	iPetType.setValue("");
+        	iPetGender.setValue("");
+        	iPetBirthday.setValue(sDate);
+        	iName.setValue("");
+        	iEMail.setValue("");
+        	iPhoneNumber.setValue("");
         	inputLayer.removeAllComponents();
         	bottomLayout.removeComponent(tableLayout);
         	bottomLayout.addComponents(inputLayer, tableLayout);
@@ -123,7 +191,7 @@ public class zooUI extends UI {
         	bottomLayout.setExpandRatio(tableLayout, 0.80f);
         	inputLayer.addComponents(
         			iPetName, iPetType, iPetGender,
-        			iEMail, iPetBirthday, iName, iPhoneNumber, currentID, edit
+        			iPetBirthday, iName, iEMail, iPhoneNumber, currentID, addb
         	);
         });
         
@@ -135,7 +203,7 @@ public class zooUI extends UI {
         	bottomLayout.setExpandRatio(tableLayout, 0.80f);
         	inputLayer.addComponents(
         			iPetName, iPetType, iPetGender,
-        			iEMail, iPetBirthday, iName, iPhoneNumber, currentID, edit
+        			iPetBirthday, iName, iEMail, iPhoneNumber, currentID, edit
         	);
         });
         

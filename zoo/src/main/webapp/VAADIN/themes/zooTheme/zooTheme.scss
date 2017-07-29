@@ -136,4 +136,8 @@ $v-background-color: #fff;
   .v-datefield-popup td.v-datefield-calendarpanel-month {
   	color: #1c278a;
   }
+  
+  .v-slot-imp .v-textfield, .v-slot-imp .v-filterselect {
+  	border: 1px dashed #1c278a;
+  }
 }
